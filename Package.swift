@@ -43,7 +43,7 @@ let package = Package(
                 .unsafeFlags([
                     "-Xclang-linker", "-mexec-model=reactor",
                     "-Xlinker", "--export=setup",
-                ])
+                ], .when(platforms: [.wasi]))
             ]
         ),
         .testTarget(
