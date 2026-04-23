@@ -1,0 +1,31 @@
+# Swift
+.build/
+.swiftpm/
+Package.resolved
+
+# Node
+node_modules/
+playwright-report/
+test-results/
+package-lock.json
+
+# TypeScript emit (sources live in ts/*.ts; emit lives next to them)
+ts/**/*.js
+ts/**/*.d.ts
+ts/**/*.d.ts.map
+ts/**/*.js.map
+!ts/**/*.config.js
+
+# Validator build artifacts — the .wasm is produced by `swift build` into
+# validate/web/ so it can be served by validate/server.mjs. It's a 60+ MB
+# binary and must never be checked in.
+validate/web/*.wasm
+
+# macOS
+.DS_Store
+
+# Editor / misc
+*.log
+*.swp
+*~
+.vscode/

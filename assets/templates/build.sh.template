@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Build {{WASM_BASENAME}}.wasm and stage it next to the HTML/JS loader.
+#
+# Uses Swift 6.3.1 because 6.2.3 deadlocks inside any @MainActor hop on WASM.
+# Override with {{ENV_PREFIX}}_SDK=<swift-sdk-name> if your toolchain differs.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SMOKE_DIR="$SCRIPT_DIR/../../Examples/SmokeTest"
+SDK="${{"{"}}{{ENV_PREFIX}}_SDK:-swift-6.3.1-RELEASE_wasm{{"}"}}"
+
+echo "→ Building {{WASM_BASENAME}} against SDK=$SDK"
+cd "$SMOKE_DIR"
+swift build --product {{WASM_BASENAME}} --swift-sdk "$SDK" -c release
+
+BUILT_WASM="$SMOKE_DIR/.build/wasm32-unknown-wasip1/release/{{WASM_BASENAME}}.wasm"
+if [[ ! -f "$BUILT_WASM" ]]; then
+    echo "✗ Build succeeded but $BUILT_WASM is missing" >&2
+    exit 1
+fi
+
+cp "$BUILT_WASM" "$SMOKE_DIR/web/{{WASM_BASENAME}}.wasm"
+echo "✓ Staged $(du -h "$SMOKE_DIR/web/{{WASM_BASENAME}}.wasm" | awk '{print $1}') at Examples/SmokeTest/web/{{WASM_BASENAME}}.wasm"

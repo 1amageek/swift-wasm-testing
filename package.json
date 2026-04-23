@@ -1,0 +1,42 @@
+{
+  "name": "swift-wasm-testing",
+  "version": "0.1.0",
+  "description": "TypeScript-side helpers for Swift WASM browser tests: Playwright fixtures, type-safe harness proxy, JavaScriptKit runtime. Ships alongside the Swift `WasmTesting` library under the same tag.",
+  "type": "module",
+  "main": "./ts/index.js",
+  "types": "./ts/index.d.ts",
+  "bin": {
+    "swift-wasm-testing": "./bin/swift-wasm-testing.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./ts/index.d.ts",
+      "import": "./ts/index.js"
+    },
+    "./runtime.mjs": "./assets/runtime.mjs",
+    "./assets/*": "./assets/*"
+  },
+  "files": [
+    "bin/**/*",
+    "cli/**/*",
+    "ts/**/*.js",
+    "ts/**/*.d.ts",
+    "ts/**/*.ts",
+    "assets/**/*"
+  ],
+  "scripts": {
+    "build": "tsc -p ts/tsconfig.json",
+    "typecheck": "tsc -p ts/tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@playwright/test": ">=1.49.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1amageek/swift-wasm-testing.git"
+  },
+  "license": "MIT"
+}
